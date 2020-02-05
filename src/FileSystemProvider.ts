@@ -49,7 +49,7 @@ export class FileSystemProvider implements vscode.TreeDataProvider<FileSystemIte
 
 				driveList.forEach(element => {
 					try {
-						driveItems.push(new FileSystemItem(element, element));
+						driveItems.push(new FileSystemItem(element, element + "\\"));
 					} catch (error) {
 					}
 				});
