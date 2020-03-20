@@ -8,7 +8,7 @@ export class FileSystemProvider implements vscode.TreeDataProvider<FileSystemIte
 	private _onDidChangeTreeData: vscode.EventEmitter<FileSystemItem | undefined> = new vscode.EventEmitter<FileSystemItem | undefined>();
 	readonly onDidChangeTreeData: vscode.Event<FileSystemItem | undefined> = this._onDidChangeTreeData.event;
 
-	constructor(private workspaceRoot: string) {
+	constructor() {
 	}
 
 	refresh(): void {
@@ -20,12 +20,6 @@ export class FileSystemProvider implements vscode.TreeDataProvider<FileSystemIte
 	}
 
 	getChildren(element?: FileSystemItem): Promise<FileSystemItem[]> {
-
-		if (!this.workspaceRoot) {
-			vscode.window.showInformationMessage('No dependency in empty workspace');
-			return Promise.resolve([]);
-		}
-
 		if (element) {
 			return Promise.resolve(this.getFileSystemItemsInFolder(element.fullPath));
 		}

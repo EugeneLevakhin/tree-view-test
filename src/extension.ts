@@ -11,11 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(disposable);
 
-	let rootPath: string | undefined = vscode.workspace.rootPath;
-
-	if (rootPath) {
-		vscode.window.registerTreeDataProvider('fileSystem', new FileSystemProvider(rootPath));
-	}
+	vscode.window.registerTreeDataProvider('fileSystem', new FileSystemProvider());
 }
 
 // this method is called when your extension is deactivated
