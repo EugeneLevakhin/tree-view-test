@@ -4,25 +4,23 @@ import * as fs from 'fs';
 
 export class FileSystemItem extends vscode.TreeItem {
 
-    constructor(
-        public readonly label: string,
-        public readonly fullPath: string,
-        public readonly command?: vscode.Command
-    ) {
-        super(label, vscode.TreeItemCollapsibleState.Collapsed);
+	constructor(
+		public readonly label: string,
+		public readonly fullPath: string,
+		public readonly command?: vscode.Command
+	) {
+		super(label, vscode.TreeItemCollapsibleState.Collapsed);
 
-        let stat: fs.Stats = fs.lstatSync(fullPath);
+		if (fs.lstatSync(fullPath).isDirectory()) {
+			this.contextValue = "folder";
+		} else {
+			this.contextValue = "document";
+			this.collapsibleState = vscode.TreeItemCollapsibleState.None;
+		}
 
-        if (fs.lstatSync(fullPath).isDirectory()) {
-            this.contextValue = "folder";
-        } else {
-            this.contextValue = "document";
-            this.collapsibleState = vscode.TreeItemCollapsibleState.None;
-        }
-
-        this.iconPath = {
-            light: path.join(__filename, '..', '..', 'resources', 'light', `${this.contextValue}.svg`),
-            dark: path.join(__filename, '..', '..', 'resources', 'dark', `${this.contextValue}.svg`)
-        };
-    }
+		this.iconPath = {
+			light: path.join(__filename, '..', '..', 'resources', 'light', `${this.contextValue}.svg`),
+			dark: path.join(__filename, '..', '..', 'resources', 'dark', `${this.contextValue}.svg`)
+		};
+	}
 }

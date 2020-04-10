@@ -1,11 +1,13 @@
 import * as vscode from 'vscode';
+import * as process from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import { FileSystemItem } from "./FileSystemItem";
 
 export class FileSystemProvider implements vscode.TreeDataProvider<FileSystemItem> {
 
-	private _onDidChangeTreeData: vscode.EventEmitter<FileSystemItem | undefined> = new vscode.EventEmitter<FileSystemItem | undefined>();
+	private _onDidChangeTreeData: vscode.EventEmitter<FileSystemItem | undefined>
+		= new vscode.EventEmitter<FileSystemItem | undefined>();
 	readonly onDidChangeTreeData: vscode.Event<FileSystemItem | undefined> = this._onDidChangeTreeData.event;
 
 	constructor() {
@@ -29,11 +31,10 @@ export class FileSystemProvider implements vscode.TreeDataProvider<FileSystemIte
 	}
 
 	private getDrives(): Promise<FileSystemItem[]> {
-		const child = require('child_process');
 		let driveList: string[];
 
 		return new Promise((resolve, reject) => {
-			child.exec('wmic logicaldisk get name', (error: any, stdout: string) => {
+			process.exec('wmic logicaldisk get name', (error: any, stdout: string) => {
 
 				driveList = stdout.split('\r\r\n')
 					.filter((value: string) => /[A-Za-z]:/.test(value))

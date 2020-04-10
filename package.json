@@ -36,6 +36,10 @@
 				{
 					"id": "fileSystem",
 					"name": "File System"
+				},
+				{
+					"id": "fileSystem2",
+					"name": "File System2"
 				}
 			]
 		}
